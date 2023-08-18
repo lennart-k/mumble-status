@@ -9,10 +9,10 @@ import (
 )
 
 type ServerStatus struct {
-	version           string
-	users_online      uint32
-	users_max         uint32
-	allowed_bandwidth uint32 // in bits/s
+	Version          string
+	UsersOnline      uint32
+	UsersMax         uint32
+	AllowedBandwidth uint32 // in bits/s
 }
 
 func GetServerStatus(address string) (ServerStatus, error) {
@@ -40,9 +40,9 @@ func GetServerStatus(address string) (ServerStatus, error) {
 	allowed_bandwidth := binary.BigEndian.Uint32(response[20:24])
 
 	return ServerStatus{
-		version:           version,
-		users_online:      users_online,
-		users_max:         users_max,
-		allowed_bandwidth: allowed_bandwidth,
+		Version:          version,
+		UsersOnline:      users_online,
+		UsersMax:         users_max,
+		AllowedBandwidth: allowed_bandwidth,
 	}, nil
 }

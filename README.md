@@ -6,7 +6,7 @@ A simple tool to get receive the status of your Mumble server:
 - Maximum bandwidth
 
 ## Planned features
-- [ ] REST API
-- [ ] Prometheus exporter
+- [x] REST API
+- [x] Prometheus exporter
 - [ ] maybe some notifier?
 

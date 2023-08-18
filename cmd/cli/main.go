@@ -10,15 +10,14 @@ import (
 )
 
 func main() {
-	hostPtr := flag.String("h", "", "hostname")
-	portPtr := flag.Uint("p", 64738, "port")
+	addressPtr := flag.String("address", "", "address")
 	flag.Parse()
-	if *hostPtr == "" {
+	if *addressPtr == "" {
 		flag.PrintDefaults()
 		os.Exit(1)
 	}
 
-	status, err := status.GetServerStatus(*hostPtr, *portPtr)
+	status, err := status.GetServerStatus(*addressPtr)
 	if err != nil {
 		log.Fatal(err)
 	}

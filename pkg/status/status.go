@@ -15,8 +15,8 @@ type ServerStatus struct {
 	allowed_bandwidth uint32 // in bits/s
 }
 
-func GetServerStatus(host string, port uint) (ServerStatus, error) {
-	conn, err := net.Dial("udp", fmt.Sprintf("%s:%d", host, port))
+func GetServerStatus(address string) (ServerStatus, error) {
+	conn, err := net.Dial("udp", address)
 	if err != nil {
 		return ServerStatus{}, err
 	}

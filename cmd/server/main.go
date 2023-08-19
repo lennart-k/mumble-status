@@ -2,14 +2,16 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
-	"github.com/lennart-k/mumble-status/pkg/status"
-	"github.com/prometheus/client_golang/prometheus"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/lennart-k/mumble-status/pkg/status"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 )
 
 type GetStatusHandler struct {
@@ -58,7 +60,14 @@ func NewStatusExporter(mumble_address string) StatusExporter {
 }
 
 func (s *StatusExporter) Collect(ch chan<- prometheus.Metric) {
-	status, _ := status.GetServerStatus(s.MumbleAddress)
+	status, err := status.GetServerStatus(s.MumbleAddress)
+	if err != nil {
+		// I don't know if this is the preferred way, I'd actually just like to return an error for Collect
+		ch <- prometheus.NewInvalidMetric(s.users_online.Desc(), errors.New("Could not fetch server status"))
+		ch <- prometheus.NewInvalidMetric(s.users_max.Desc(), errors.New("Could not fetch server status"))
+		ch <- prometheus.NewInvalidMetric(s.allowed_bandwidth.Desc(), errors.New("Could not fetch server status"))
+		return
+	}
 
 	s.users_online.Set(float64(status.UsersOnline))
 	s.users_max.Set(float64(status.UsersMax))

@@ -18,6 +18,7 @@ type ServerStatus struct {
 
 func GetServerStatus(address string) (ServerStatus, error) {
 	conn, err := net.Dial("udp", address)
+	conn.SetDeadline(time.Now().Add(2 * time.Second))
 	if err != nil {
 		return ServerStatus{}, err
 	}

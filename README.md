@@ -18,7 +18,7 @@ A simple tool to get receive the status of your Mumble server:
 
 The server can be run as a Docker container with
 ```sh
-docker run -p3000:3000 -eMUMBLE_ADDRESS=<your-server>:64738 ghcr.io/lennart-k/mumble-status:main
+docker run -p3000:3000 -eMUMBLE_ADDRESS=<your-server>:64738 ghcr.io/lennart-k/mumble-status:stable
 ```
 
 #### Manual build
